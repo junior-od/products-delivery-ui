@@ -128,7 +128,7 @@ fun BottomBar(
     val indicatorOffset by animateDpAsState(
         targetValue = itemWidth * selectedIndex,
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioNoBouncy,
+            dampingRatio = Spring.DampingRatioLowBouncy,
             stiffness = Spring.StiffnessMediumLow
         ),
         label = "indicator_offset"
@@ -392,7 +392,7 @@ fun Badge(
 }
 
 @Composable
-fun LocationHeaderComponent(
+fun TopBarComponent(
     userProfileImage: String = "", // URL or resource for profile image
     location: String = "Wertheimer, Illinois",
     onLocationClick: () -> Unit = {},
@@ -423,7 +423,7 @@ fun LocationHeaderComponent(
         ) {
 
             HomeProfileBar(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 userProfileImage = userProfileImage,
                 location = location,
                 onLocationClick = onLocationClick,
@@ -566,9 +566,9 @@ fun HomeProfileBar(
 
         }
 
-        if (!isSearchInProgress) {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+//        if (!isSearchInProgress) {
+            Spacer(modifier = Modifier.height(if(!isSearchInProgress) 16.dp else 24.dp))
+//        }
 
 
         // Search bar
@@ -702,7 +702,7 @@ fun HomeProfileBar(
 @Composable
 fun LocationHeaderPreview() {
     UitakehomeappTheme {
-        LocationHeaderComponent()
+        TopBarComponent()
     }
 }
 

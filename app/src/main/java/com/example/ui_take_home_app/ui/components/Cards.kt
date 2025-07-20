@@ -57,71 +57,86 @@ fun AvailableVehicleItemCard(
     title: String = "Ocean Frieght",
     body: String = "International",
 ) {
+
+    var slideCardIn by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     var slideIconIn by rememberSaveable {
         mutableStateOf(false)
     }
 
     LaunchedEffect(Unit) {
+        slideCardIn = true
+        delay(500)
         slideIconIn = true
     }
 
-    Card(
-        modifier = modifier
-            .width(150.dp)
-            .height(200.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-
-        Box(
-            modifier = Modifier.fillMaxSize()
+    AnimatedVisibility(visible = slideCardIn, enter = slideInHorizontally(
+        animationSpec = tween(1000),
+        initialOffsetX = {
+            it
+        })) {
+        Card(
+            modifier = modifier
+                .width(150.dp)
+                .height(200.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
         ) {
-            androidx.compose.animation.AnimatedVisibility(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(x = (10).dp, y = (-10).dp)
-                    .size(130.dp), visible = slideIconIn, enter = slideInHorizontally(
-                    animationSpec = tween(1000),
-                    initialOffsetX = {
-                        it
-                    }
-                )
-            ) {
-                // Ship icon
-                AsyncImage(
-                    model = icon,
-                    contentDescription = "vehicle icon",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            // Header text
-            Column(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(16.dp)
-            ) {
 
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
                 androidx.compose.animation.AnimatedVisibility(
-                    visible = slideIconIn, enter = slideInHorizontally(
-                        animationSpec = tween(900),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(x = (10).dp, y = (-10).dp)
+                        .size(130.dp), visible = slideIconIn, enter = slideInHorizontally(
+                        animationSpec = tween(1000),
                         initialOffsetX = {
-                            it / 2
+                            it
                         }
                     )
                 ) {
-                    DoubleTextWithIcon(
-                        hasIcon = false,
-                        title = title,
-                        body = body,
-                        titleStyle = MaterialTheme.typography.titleMedium.copy(
-                            color = darkBlue
-                        ),
-                        bodyStyle = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
+                    // Ship icon
+                    AsyncImage(
+                        model = icon,
+                        contentDescription = "vehicle icon",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
                     )
+                }
+                // Header text
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(16.dp)
+                ) {
+
+                    androidx.compose.animation.AnimatedVisibility(
+                        visible = slideIconIn, enter = slideInHorizontally(
+                            animationSpec = tween(900),
+                            initialOffsetX = {
+                                it / 2
+                            }
+                        )
+                    ) {
+                        DoubleTextWithIcon(
+                            hasIcon = false,
+                            title = title,
+                            body = body,
+                            titleStyle = MaterialTheme.typography.titleLarge.copy(
+                                color = darkBlue
+                            ),
+                            bodyStyle = MaterialTheme.typography.bodyLarge.copy(
+                                color = MaterialTheme.colorScheme.inverseSurface
+                            )
+                        )
+                    }
+
+
                 }
 
 
@@ -129,8 +144,6 @@ fun AvailableVehicleItemCard(
 
 
         }
-
-
     }
 
 
@@ -139,18 +152,29 @@ fun AvailableVehicleItemCard(
 @Composable
 fun HorizontalVehiclesList(
     modifier: Modifier = Modifier,
-    vehicles: List<String> = listOf("1", "2", "3")
+    vehicles: List<Vehicle> = listOf(Vehicle("Ocean Freight","International",R.drawable.cargo_ship), Vehicle("Cargo Freight","Reliable",R.drawable.cargo_truck), Vehicle("Air Freight","International",R.drawable.cargo_ship))
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(16.dp)
     ) {
         itemsIndexed(vehicles) { index, vehicle ->
-            AvailableVehicleItemCard()
+            AvailableVehicleItemCard(
+                icon = vehicle.icon,
+                title = vehicle.title,
+                body = vehicle.body
+            )
 
         }
     }
 }
+
+data class Vehicle(
+    val title: String,
+    val body: String,
+    val icon: Int
+)
 
 @Composable
 fun DeliveryNotificationCard(
@@ -331,7 +355,7 @@ fun DeliveryNotificationCardPreview(){
     }
 }
 
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun AvailableVehicleItemCardPreview() {
     UitakehomeappTheme {

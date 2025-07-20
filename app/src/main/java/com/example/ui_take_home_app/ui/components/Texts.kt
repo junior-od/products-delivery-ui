@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,12 +15,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 import com.example.ui_take_home_app.ui.theme.darkBlue
@@ -46,22 +51,12 @@ fun DoubleTextWithIcon(
     ) {
         if (hasIcon) {
            // Package icon
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .background(
-                        color = Color(0xFFF5E6D3), // Light peach background
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(id = icon), // You'll need to add this icon
-                    contentDescription = "Package icon",
-                    tint = Color(0xFFE67E22), // Orange color for the icon
-                    modifier = Modifier.size(20.dp)
-                )
-            }
+            AsyncImage(
+                model = icon,
+                contentDescription = "sender icon",
+                modifier = Modifier.size(40.dp).clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
 
             Spacer(modifier = Modifier.width(12.dp))
         }
@@ -72,6 +67,7 @@ fun DoubleTextWithIcon(
             if (hasTitle) {
                 Text(
                     text = title,
+                    textAlign = TextAlign.Start,
                     style = titleStyle
                 )
             }
@@ -79,6 +75,7 @@ fun DoubleTextWithIcon(
             if (hasBody){
                 Text(
                     text = body,
+                    textAlign = TextAlign.Left,
                     style = bodyStyle
                 )
             }
