@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,21 +48,45 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf(false)
                 }
 
-                LaunchedEffect(Unit) {
-                    bottomBarVisibility = true
+                var searchText by rememberSaveable {
+                    mutableStateOf("")
+                }
+
+                var searchInProgress by rememberSaveable {
+                    mutableStateOf(false)
+                }
+
+                LaunchedEffect(tabIndexSelected != 0) {
+                    bottomBarVisibility = tabIndexSelected == 0
                 }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-                        TopBarComponent()
+                        TopBarComponent(
+                            onSearchTextChange = {
+                                searchText = it
+                            },
+                            onSearchOpen = {
+                                searchInProgress = true
+                            },
+                            onSearchClosed = {
+                                searchInProgress = false
+                            }
+                        )
                     },
                     bottomBar = {
                         AnimatedVisibility(
-                            visible = bottomBarVisibility,
+                            visible = bottomBarVisibility && !searchInProgress,
                             enter = slideInVertically(
                                 animationSpec = tween(1000),
                                 initialOffsetY = {
+                                    it
+                                }
+                            ),
+                            exit = slideOutVertically(
+                                animationSpec = tween(1000),
+                                targetOffsetY = {
                                     it
                                 }
                             )
@@ -82,8 +107,9 @@ class MainActivity : ComponentActivity() {
 
                     AppNavHost(
                         modifier = Modifier.padding(innerPadding),
-                        navHostController = navHostController
-
+                        navHostController = navHostController,
+                        searchInProgress = searchInProgress,
+                        searchText = searchText
                     )
                 }
             }

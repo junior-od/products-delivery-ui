@@ -1,12 +1,15 @@
 package com.example.ui_take_home_app.ui.screens.home
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,7 +36,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,13 +49,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
+import com.example.ui_take_home_app.ui.components.AvailableVehicleItemCard
 import com.example.ui_take_home_app.ui.components.DoubleTextWithIcon
 import com.example.ui_take_home_app.ui.components.HorizontalVehiclesList
+import com.example.ui_take_home_app.ui.components.Vehicle
 import com.example.ui_take_home_app.ui.theme.darkBlue
+import java.util.Random
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    searchInProgress: Boolean,
+    searchText: String
 ) {
     var firstTime by rememberSaveable {
         mutableStateOf(false)
@@ -60,20 +74,26 @@ fun HomeScreen(
         .fillMaxSize()
         .background(color = MaterialTheme.colorScheme.background)) {
 
-        HomeContent(firstTime)
+        if (searchInProgress){
+            SearchContent(searchText)
+        }else {
+            HomeContent(firstTime)
+        }
+
     }
 }
 
 @Composable
 fun HomeContent(
-    contentAnimate: Boolean
+    contentAnimate: Boolean,
 ){
     Column(
         modifier = Modifier
             .verticalScroll(
                 state = rememberScrollState()
             )
-            .fillMaxSize().padding(bottom = 16.dp)
+            .fillMaxSize()
+            .padding(bottom = 16.dp)
 
     ){
         AnimatedVisibility(visible = contentAnimate, enter = slideInVertically(
@@ -84,7 +104,8 @@ fun HomeContent(
         )) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize().padding(16.dp)
+                    .fillMaxSize()
+                    .padding(16.dp)
             ){
                 DoubleTextWithIcon(
                     hasBody = false,
@@ -256,6 +277,117 @@ fun HomeContent(
 }
 
 @Composable
-fun SearchContent(){
+fun SearchContent(
+    searchText: String
+){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        var searchedItems by rememberSaveable {
+            mutableStateOf(
+                listOf(
+                    Search(id = 1, "Macbook pro M2", "#NE43857340857904 • Paris - Morocco"),
+                    Search(id = 2,"Summer linen jacket", "#NEJ20089934122231 • Barcelona -> Paris"),
+                    Search(id = 3,"Tapered-fit jeans AW", "#NEJ35870264978659 • Colombia - Paris"),
+                    Search(id = 4,"Slim fit jeans AW", "#NEJ35870264978659 • Bogota - Dhaka"),
+                    Search(id = 5,"Office setup desk", "#NEJ23481570754963 • France -> German")
+                ).shuffled()
+            )
+        }
+        LaunchedEffect(searchText) {
+            if (searchText.isNotEmpty()){
+                searchedItems = listOf(
+                    Search(id = 6,"Macbook pro M2", "#NE43857340857904 • Paris - Morocco"),
+                    Search(id = 7,"Summer linen jacket", "#NEJ20089934122231 • Barcelona -> Paris"),
+                    Search(id = 8,"Tapered-fit jeans AW", "#NEJ35870264978659 • Colombia - Paris"),
+                    Search(id = 9,"Office setup desk", "#NEJ23481570754963 • France -> German")
+                ).shuffled()
+            } else {
+                searchedItems = listOf(
+                    Search(id = 1, "Macbook pro M2", "#NE43857340857904 • Paris - Morocco"),
+                    Search(id = 2,"Summer linen jacket", "#NEJ20089934122231 • Barcelona -> Paris"),
+                    Search(id = 3,"Tapered-fit jeans AW", "#NEJ35870264978659 • Colombia - Paris"),
+                    Search(id = 4,"Slim fit jeans AW", "#NEJ35870264978659 • Bogota - Dhaka"),
+                    Search(id = 5,"Office setup desk", "#NEJ23481570754963 • France -> German")
+                ).shuffled()
+            }
 
+
+        }
+
+
+
+        Card(
+            modifier = Modifier.animateContentSize(),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)) {
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(16.dp)
+            ) {
+                itemsIndexed(searchedItems, key = {_,item -> item.id}) { index, item ->
+                    var firstTime by remember {
+                        mutableStateOf(false)
+                    }
+
+                    LaunchedEffect(Unit) {
+                        firstTime = true
+                    }
+
+
+                    androidx.compose.animation.AnimatedVisibility(visible = firstTime, enter = slideInVertically(
+                        animationSpec = tween(1000),
+                        initialOffsetY = {
+                            it
+                        }
+                    )) {
+                        SearchItem(title = item.title, body = item.body)
+
+
+                    }
+                    if (index < searchedItems.lastIndex ) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        HorizontalDivider(
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            thickness = 0.1.dp
+                        )
+                    }
+                }
+            }
+
+
+        }
+
+    }
 }
+
+@Composable
+fun SearchItem(
+    title: String,
+    body: String
+) {
+    DoubleTextWithIcon(
+        hasIcon = true,
+        icon = R.drawable.search_package,
+        title = title,
+        body = body,
+        titleStyle = MaterialTheme.typography.bodyLarge.copy(
+            color = darkBlue,
+            fontWeight = FontWeight.SemiBold
+        ),
+        bodyStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = MaterialTheme.colorScheme.inverseSurface
+        )
+    )
+}
+
+data class Search(
+    val id: Int,
+    val title: String,
+    val body: String
+)

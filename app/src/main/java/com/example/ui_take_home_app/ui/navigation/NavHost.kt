@@ -12,7 +12,9 @@ import com.example.ui_take_home_app.ui.screens.home.HomeScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
-    startDestination: AppDestinations = AppDestinations.Home
+    startDestination: AppDestinations = AppDestinations.Home,
+    searchInProgress: Boolean = false,
+    searchText: String = ""
 ) {
 
     NavHost(
@@ -23,7 +25,8 @@ fun AppNavHost(
 
         composable<AppDestinations.Home> {
             HomeScreen(
-
+               searchInProgress = searchInProgress,
+               searchText =  searchText
             )
         }
 

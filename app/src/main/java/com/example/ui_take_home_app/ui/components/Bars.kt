@@ -399,7 +399,9 @@ fun TopBarComponent(
     onNotificationClick: () -> Unit = {},
     onSearchTextChange: (String) -> Unit = {},
     searchText: String = "",
-    onScanClick: () -> Unit = {}
+    onScanClick: () -> Unit = {},
+    onSearchOpen: () -> Unit = {},
+    onSearchClosed: () -> Unit = {}
 ) {
 
     var firstTimeBar by rememberSaveable {
@@ -431,12 +433,8 @@ fun TopBarComponent(
                 onSearchTextChange = onSearchTextChange,
                 searchText = searchText,
                 onScanClick = onScanClick,
-                onSearchOpen = {
-                    // notify others
-                },
-                onSearchClosed = {
-                    // notify
-                }
+                onSearchOpen = onSearchOpen,
+                onSearchClosed = onSearchClosed
             )
 
 //        HeaderWithFilterTabs(
