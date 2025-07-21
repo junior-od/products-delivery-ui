@@ -81,6 +81,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
+import com.example.ui_take_home_app.ui.navigation.AppDestinations
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 import com.example.ui_take_home_app.ui.theme.darkBlue
 import com.example.ui_take_home_app.ui.theme.darkGray
@@ -227,6 +228,7 @@ fun HeaderWithFilterTabs(
     hasFilterTabs: Boolean = false,
     selectedTabIndex: Int = 0,
     tabs: List<TabItem> = emptyList(),
+    onTabSelected: (Int) -> Unit = {},
     onBackButtonPressed: () -> Unit = {}
 ) {
     var visible by remember { mutableStateOf(false) }
@@ -292,7 +294,9 @@ fun HeaderWithFilterTabs(
 
                 )
             ) {
-                TabBarWithBadges()
+                TabBarWithBadges(
+                    onTabSelected =  onTabSelected
+                )
             }
 
         }
@@ -302,7 +306,9 @@ fun HeaderWithFilterTabs(
 }
 
 @Composable
-fun TabBarWithBadges() {
+fun TabBarWithBadges(
+    onTabSelected: (Int) -> Unit = {}
+) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val tabWidth = screenWidth / 3
 
@@ -312,7 +318,7 @@ fun TabBarWithBadges() {
         TabItem("All", 12, true),
         TabItem("Completed", 5, false),
         TabItem("In progress", 3, false),
-        TabItem("Pending Order", 0, false),
+        TabItem("Pending order", 4, false),
         TabItem("Cancelled", 0, false),
         // Assuming pending has no count visible
     )
@@ -337,7 +343,10 @@ fun TabBarWithBadges() {
             tabs.forEachIndexed { index, tab ->
                 Tab(
                     selected = selectedTab == index,
-                    onClick = { selectedTab = index },
+                    onClick = {
+                        selectedTab = index
+                        onTabSelected(index)
+                   },
                     modifier = Modifier
                         .padding(vertical = 12.dp)
                         .padding(horizontal = 8.dp)
@@ -393,6 +402,7 @@ fun Badge(
 
 @Composable
 fun TopBarComponent(
+    tabSelected: Int,
     userProfileImage: String = "", // URL or resource for profile image
     location: String = "Wertheimer, Illinois",
     onLocationClick: () -> Unit = {},
@@ -401,6 +411,7 @@ fun TopBarComponent(
     searchText: String = "",
     onScanClick: () -> Unit = {},
     onSearchOpen: () -> Unit = {},
+    onTabSelected: (Int) -> Unit = {},
     onSearchClosed: () -> Unit = {}
 ) {
 
@@ -424,29 +435,37 @@ fun TopBarComponent(
                 .animateContentSize()
         ) {
 
-            HomeProfileBar(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                userProfileImage = userProfileImage,
-                location = location,
-                onLocationClick = onLocationClick,
-                onNotificationClick = onNotificationClick,
-                onSearchTextChange = onSearchTextChange,
-                searchText = searchText,
-                onScanClick = onScanClick,
-                onSearchOpen = onSearchOpen,
-                onSearchClosed = onSearchClosed
-            )
+            when (tabSelected) {
+                0 -> {
+                    HomeProfileBar(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        userProfileImage = userProfileImage,
+                        location = location,
+                        onLocationClick = onLocationClick,
+                        onNotificationClick = onNotificationClick,
+                        onSearchTextChange = onSearchTextChange,
+                        searchText = searchText,
+                        onScanClick = onScanClick,
+                        onSearchOpen = onSearchOpen,
+                        onSearchClosed = onSearchClosed
+                    )
+                }
 
-//        HeaderWithFilterTabs(
-//            title = "Ship Payemts",
-//            hasFilterTabs = true
-//        )
+                1 -> {
+                    HeaderWithFilterTabs(
+                        title = "Calculate",
+                        hasFilterTabs = false
+                    )
+                }
 
-//        HeaderWithFilterTabs(
-//            title = "Calculate",
-//            hasFilterTabs = false
-//        )
-
+                2 -> {
+                    HeaderWithFilterTabs(
+                        title = "Shipment History",
+                        hasFilterTabs = true,
+                        onTabSelected =  onTabSelected
+                    )
+                }
+            }
 
         }
 
@@ -700,7 +719,7 @@ fun HomeProfileBar(
 @Composable
 fun LocationHeaderPreview() {
     UitakehomeappTheme {
-        TopBarComponent()
+        TopBarComponent(tabSelected = 0)
     }
 }
 

@@ -28,7 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.ui_take_home_app.ui.components.BottomBar
 import com.example.ui_take_home_app.ui.components.TopBarComponent
+import com.example.ui_take_home_app.ui.navigation.AppDestinations
 import com.example.ui_take_home_app.ui.navigation.AppNavHost
+import com.example.ui_take_home_app.ui.navigation.goToScreen
+import com.example.ui_take_home_app.ui.navigation.popToScreenInBackStack
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,19 +59,39 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf(false)
                 }
 
+                var topTabSelected by rememberSaveable {
+                    mutableIntStateOf(0)
+                }
+
                 LaunchedEffect(tabIndexSelected != 0) {
                     bottomBarVisibility = tabIndexSelected == 0
+
+                    when (tabIndexSelected) {
+                        1 -> {
+
+                        }
+
+                        2 -> {
+                            // shipment
+                            navHostController.goToScreen(AppDestinations.Shipment)
+
+                        }
+                    }
                 }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         TopBarComponent(
+                            tabSelected = tabIndexSelected,
                             onSearchTextChange = {
                                 searchText = it
                             },
                             onSearchOpen = {
                                 searchInProgress = true
+                            },
+                            onTabSelected = {
+                                topTabSelected = it
                             },
                             onSearchClosed = {
                                 searchInProgress = false
@@ -109,7 +132,8 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding),
                         navHostController = navHostController,
                         searchInProgress = searchInProgress,
-                        searchText = searchText
+                        searchText = searchText,
+                        topTabSelected = topTabSelected
                     )
                 }
             }

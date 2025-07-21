@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.ui_take_home_app.ui.screens.home.HomeScreen
+import com.example.ui_take_home_app.ui.screens.shipment.ShipmentScreen
 
 @Composable
 fun AppNavHost(
@@ -14,7 +15,8 @@ fun AppNavHost(
     navHostController: NavHostController,
     startDestination: AppDestinations = AppDestinations.Home,
     searchInProgress: Boolean = false,
-    searchText: String = ""
+    searchText: String = "",
+    topTabSelected : Int
 ) {
 
     NavHost(
@@ -30,6 +32,12 @@ fun AppNavHost(
             )
         }
 
+        composable<AppDestinations.Shipment> {
+            ShipmentScreen(
+                topTabSelected = topTabSelected
+            )
+        }
+
     }
 
 }
@@ -39,6 +47,19 @@ fun NavController.popToScreen(screen: AppDestinations) {
         popUpTo(0) { inclusive = true }
     }
 
+}
+
+fun NavController.goToScreen(screen: AppDestinations) {
+    return this.navigate(screen){
+        launchSingleTop = true
+
+        restoreState = true
+        popBackStack(
+            screen,
+            inclusive = false,
+            saveState = true
+        )
+    }
 }
 
 fun NavController.popToScreenInBackStack(screen: AppDestinations) {

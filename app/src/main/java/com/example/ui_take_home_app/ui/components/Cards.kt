@@ -2,6 +2,7 @@ package com.example.ui_take_home_app.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
@@ -33,7 +34,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -183,9 +187,45 @@ fun DeliveryNotificationCard(
     origin: String = "Atlanta",
     price: String = "$1400 USD",
     date: String = "Sep 20, 2023",
-    status: String = "In Progress",
+    status: Int = 0,
     delayTime: Long = 0L
 ) {
+
+    val colorCode = when (status){
+        0 -> {
+            Color(0xFF10B981)
+        }
+        1 -> {
+            Color(0xFFF59E0B)
+        }
+        else -> {
+            Color(0xFF3B82F6)
+        }
+    }
+
+    val statusName = when (status){
+        0 -> {
+            "in-progress"
+        }
+        1 -> {
+            "Pending"
+        }
+        else -> {
+            "loading"
+        }
+    }
+
+    val icon = when (status){
+        0 -> {
+            R.drawable.ic_progress
+        }
+        1 -> {
+            R.drawable.ic_pending
+        }
+        else -> {
+            R.drawable.ic_loading
+        }
+    }
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -207,8 +247,8 @@ fun DeliveryNotificationCard(
     }
 
 
-    AnimatedVisibility(visible = !cardSlideUp,
-        enter = slideInVertically(
+    AnimatedVisibility(visible = cardSlideUp,
+        enter = fadeIn() + slideInVertically(
             animationSpec = tween(1000),
             initialOffsetY = {
                 it
@@ -226,10 +266,10 @@ fun DeliveryNotificationCard(
                 containerColor = MaterialTheme.colorScheme.tertiary
             ),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 8.dp
+                defaultElevation = 1.dp
             )
         ) {
-            AnimatedVisibility(visible = !contentSlideUp,enter = slideInVertically(
+            AnimatedVisibility(visible = contentSlideUp,enter = slideInVertically(
                 animationSpec = tween(1000),
                 initialOffsetY = {
                     it
@@ -255,15 +295,15 @@ fun DeliveryNotificationCard(
                                 .padding(vertical = 8.dp, horizontal = 12.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Refresh,
+                                painter = painterResource(id = icon),
                                 contentDescription = "In Progress",
-                                tint = Color(0xFF10B981),
+                                tint = colorCode,
                                 modifier = Modifier.size(16.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "in-progress",
-                                color = Color(0xFF10B981),
+                                text = statusName,
+                                color = colorCode,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -318,29 +358,6 @@ fun DeliveryNotificationCard(
     }
 }
 
-@Composable
-fun VerticalShipmentHistoryCards(
-    modifier: Modifier = Modifier,
-    history: List<Int> = listOf(1,2,3,4,5,6)
-){
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        contentPadding = PaddingValues(bottom = 16.dp)
-    ) {
-        items(history, key = { it }) { index ->
-
-
-            DeliveryNotificationCard(
-                delayTime = 1000L
-            )
-
-        }
-
-
-    }
-
-}
 
 @Preview(showBackground = true,
     device = "spec:id=reference_phone,shape=Normal,width=411,height=891,unit=dp,dpi=420"
@@ -349,7 +366,7 @@ fun VerticalShipmentHistoryCards(
 fun DeliveryNotificationCardPreview(){
     UitakehomeappTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            VerticalShipmentHistoryCards()
+            DeliveryNotificationCard()
         }
 
     }
