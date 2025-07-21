@@ -13,15 +13,15 @@ import com.example.ui_take_home_app.R
  * set the matching fontweight to font family type
  * */
 private val RobotoCondensed = FontFamily(
-    Font(R.font.robotocondensed_black, FontWeight.Black),
-    Font(R.font.robotocondensed_extrabold, FontWeight.ExtraBold),
-    Font(R.font.robotocondensed_extralight, FontWeight.ExtraLight),
-    Font(R.font.robotocondensed_medium, FontWeight.Medium),
-    Font(R.font.robotocondensed_thin, FontWeight.Thin),
-    Font(R.font.robotocondensed_semibold, FontWeight.SemiBold),
-    Font(R.font.robotocondensed_regular, FontWeight.Normal),
-    Font(R.font.robotocondensed_light, FontWeight.Light),
-    Font(R.font.robotocondensed_bold, FontWeight.Bold),
+    Font(R.font.inter_black, FontWeight.Black),
+    Font(R.font.inter_extrabold, FontWeight.ExtraBold),
+    Font(R.font.inter_extralight, FontWeight.ExtraLight),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_thin, FontWeight.Thin),
+    Font(R.font.inter_semibold, FontWeight.SemiBold),
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_light, FontWeight.Light),
+    Font(R.font.inter_bold, FontWeight.Bold),
 
     )
 

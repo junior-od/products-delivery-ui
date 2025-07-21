@@ -68,11 +68,11 @@ fun ShipmentScreen(
 
             else -> {
                 history = listOf(
-                    Shipment(2,"1"),
-                    Shipment(3,"2"),
-                    Shipment(4,"1"),
-                    Shipment(5,"0"),
-                    Shipment(6,"2"),
+                    Shipment(25,"1"),
+                    Shipment(36,"2"),
+                    Shipment(46,"1"),
+                    Shipment(56,"0"),
+                    Shipment(66,"2"),
                 ).shuffled()
             }
         }

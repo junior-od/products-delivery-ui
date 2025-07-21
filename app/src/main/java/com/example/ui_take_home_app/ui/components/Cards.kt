@@ -131,10 +131,10 @@ fun AvailableVehicleItemCard(
                             hasIcon = false,
                             title = title,
                             body = body,
-                            titleStyle = MaterialTheme.typography.titleLarge.copy(
+                            titleStyle = MaterialTheme.typography.titleMedium.copy(
                                 color = darkBlue
                             ),
-                            bodyStyle = MaterialTheme.typography.bodyLarge.copy(
+                            bodyStyle = MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.inverseSurface
                             )
                         )
