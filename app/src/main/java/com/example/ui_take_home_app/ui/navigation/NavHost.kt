@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.ui_take_home_app.ui.screens.calculate.CalculateScreen
 import com.example.ui_take_home_app.ui.screens.home.HomeScreen
 import com.example.ui_take_home_app.ui.screens.shipment.ShipmentScreen
+import com.example.ui_take_home_app.ui.screens.success.SuccessScreen
 
 @Composable
 fun AppNavHost(
@@ -61,6 +62,9 @@ fun AppNavHost(
 
         composable<AppDestinations.Success> {
 
+            SuccessScreen(
+                goHomeClicked = onBackHome
+            )
 
         }
 

@@ -77,7 +77,7 @@ fun AppButton(
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge.copy(
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.SemiBold
             )
         )
     }
