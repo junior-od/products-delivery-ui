@@ -677,14 +677,17 @@ fun HomeProfileBar(
                             }
                             .padding(vertical = 4.dp),
                         textStyle = MaterialTheme.typography.bodyLarge.copy(
-                            color = darkGray
+                            color = darkGray,
+                            fontWeight = FontWeight.Medium
                         ),
                         decorationBox = { innerTextField ->
                             if (searchValue.isEmpty()) {
                                 Text(
                                     text = "Enter the receipt number ...",
                                     color = darkGray,
-                                    style = MaterialTheme.typography.bodyLarge
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        fontWeight = FontWeight.Medium
+                                    )
                                 )
                             }
                             innerTextField()
