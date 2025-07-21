@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -51,7 +53,7 @@ fun SuccessScreen(
     goHomeClicked: () -> Unit = {}
 ) {
 
-    BackHandler(enabled = false){
+    BackHandler(enabled = true){
         // do nothing
     }
 
@@ -69,7 +71,7 @@ fun SuccessScreen(
 
     // Animate size from 56dp to 80dp
     val animatedSize by animateDpAsState(
-        targetValue = if (firstTime) 200.dp else 56.dp,
+        targetValue = if (firstTime) 160.dp else 56.dp,
         animationSpec = tween(
             durationMillis = 1000,
             easing = FastOutSlowInEasing
@@ -84,6 +86,7 @@ fun SuccessScreen(
 
     Box(modifier = modifier
         .fillMaxSize()
+        .verticalScroll(rememberScrollState())
         .background(color = MaterialTheme.colorScheme.background)) {
 
 

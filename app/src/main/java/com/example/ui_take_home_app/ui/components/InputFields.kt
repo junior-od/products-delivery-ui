@@ -159,7 +159,9 @@ fun BoxSelectorCard(
                     fontWeight = FontWeight.Medium,
                     color = darkBlue
                 ),
-                modifier = Modifier.weight(1f).padding(vertical = 8.dp)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 8.dp)
             )
 
             // Chevron down icon
@@ -286,7 +288,7 @@ fun CategorySelectionGrid(
 @Composable
 fun CategorySelectionGridPreview() {
     UitakehomeappTheme {
-        var categories by remember {
+        var categories by rememberSaveable {
             mutableStateOf(
                 listOf(
                     Category("documents", "Documents"),

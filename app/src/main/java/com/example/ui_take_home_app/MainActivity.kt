@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                     mutableIntStateOf(0)
                 }
 
-                LaunchedEffect(tabIndexSelected != 0) {
+                LaunchedEffect(tabIndexSelected) {
                     bottomBarVisibility = tabIndexSelected == 0 || tabIndexSelected == 3
 
                     when (tabIndexSelected) {
@@ -97,6 +97,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onSearchClosed = {
                                 searchInProgress = false
+                            },
+                            onNavHome = {
+                                tabIndexSelected = 0
                             }
                         )
                     },

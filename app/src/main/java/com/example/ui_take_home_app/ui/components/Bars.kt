@@ -29,20 +29,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Build
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -71,7 +61,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
@@ -82,7 +71,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
-import com.example.ui_take_home_app.ui.navigation.AppDestinations
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 import com.example.ui_take_home_app.ui.theme.darkBlue
 import com.example.ui_take_home_app.ui.theme.darkGray
@@ -234,7 +222,7 @@ fun HeaderWithFilterTabs(
     onTabSelected: (Int) -> Unit = {},
     onBackButtonPressed: () -> Unit = {}
 ) {
-    var visible by remember { mutableStateOf(false) }
+    var visible by rememberSaveable { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         visible = true
     }
@@ -315,7 +303,7 @@ fun TabBarWithBadges(
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val tabWidth = screenWidth / 3
 
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by rememberSaveable { mutableIntStateOf(0) }
 
     val tabs = listOf(
         TabItem("All", 12, true),
@@ -415,7 +403,8 @@ fun TopBarComponent(
     onScanClick: () -> Unit = {},
     onSearchOpen: () -> Unit = {},
     onTabSelected: (Int) -> Unit = {},
-    onSearchClosed: () -> Unit = {}
+    onSearchClosed: () -> Unit = {},
+    onNavHome: () -> Unit = {}
 ) {
 
     if(tabSelected > 3){
@@ -461,7 +450,8 @@ fun TopBarComponent(
                 1 -> {
                     HeaderWithFilterTabs(
                         title = "Calculate",
-                        hasFilterTabs = false
+                        hasFilterTabs = false,
+                        onBackButtonPressed = onNavHome
                     )
                 }
 
@@ -469,7 +459,8 @@ fun TopBarComponent(
                     HeaderWithFilterTabs(
                         title = "Shipment History",
                         hasFilterTabs = true,
-                        onTabSelected =  onTabSelected
+                        onTabSelected =  onTabSelected,
+                        onBackButtonPressed = onNavHome
                     )
                 }
             }
@@ -494,8 +485,8 @@ fun HomeProfileBar(
     onSearchOpen: () -> Unit = {}, // ← callback when search starts,
     onSearchClosed: () -> Unit = {} // ← callback when search closed
 ) {
-    var searchValue by remember { mutableStateOf(searchText) }
-    var isSearchInProgress by remember {
+    var searchValue by rememberSaveable { mutableStateOf(searchText) }
+    var isSearchInProgress by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -600,7 +591,7 @@ fun HomeProfileBar(
         val focusManager = LocalFocusManager.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
-        var isFocused by remember { mutableStateOf(false) }
+        var isFocused by rememberSaveable { mutableStateOf(false) }
 
         val imeVisible = WindowInsets.isImeVisible
 

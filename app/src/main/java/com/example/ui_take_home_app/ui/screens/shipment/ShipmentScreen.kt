@@ -59,7 +59,7 @@ fun ShipmentScreen(
         Shipment(4,"1"),
         Shipment(5,"0"),
         Shipment(6,"2"),
-       ).shuffled()
+       )
         )
     }
 
@@ -81,7 +81,7 @@ fun ShipmentScreen(
                     Shipment(46,"1"),
                     Shipment(56,"0"),
                     Shipment(66,"2"),
-                ).shuffled()
+                )
             }
         }
 
