@@ -245,9 +245,9 @@ fun HeaderWithFilterTabs(
                 ) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleLarge.copy(
+                        style = MaterialTheme.typography.titleMedium.copy(
                             color = MaterialTheme.colorScheme.tertiary,
-                            fontWeight = if (hasFilterTabs) FontWeight.Bold else FontWeight.Medium
+                            fontWeight =  FontWeight.SemiBold
                         )
                     )
                 }
@@ -325,7 +325,7 @@ fun TabBarWithBadges(
                 TabRowDefaults.SecondaryIndicator(
                     Modifier
                         .tabIndicatorOffset(tabPositions[selectedTab])
-                        .padding(horizontal = if (selectedTab == 0) 16.dp else 4.dp),
+                        .padding(horizontal = if (selectedTab == 0) 8.dp else 4.dp),
                     color = MaterialTheme.colorScheme.secondary,
                     height = 3.dp
                 )
@@ -344,13 +344,14 @@ fun TabBarWithBadges(
 
                 ) {
                     Row(
+                        modifier = Modifier.padding(bottom = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = tab.title,
                             color = if (selectedTab == index) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.inverseOnSurface,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             maxLines = 1
                         )
 
@@ -386,7 +387,7 @@ fun Badge(
             modifier = Modifier.padding(horizontal = 4.dp),
             text = count.toString(),
             color = if (isSelected) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.inverseOnSurface,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -427,14 +428,14 @@ fun TopBarComponent(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
-                .padding(vertical = 16.dp)
+                .padding(top = 16.dp)
                 .animateContentSize()
         ) {
 
             when (tabSelected) {
                 0 -> {
                     HomeProfileBar(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp).padding(bottom = 8.dp),
                         userProfileImage = userProfileImage,
                         location = location,
                         onLocationClick = onLocationClick,
@@ -457,7 +458,7 @@ fun TopBarComponent(
 
                 2 -> {
                     HeaderWithFilterTabs(
-                        title = "Shipment History",
+                        title = "Shipment history",
                         hasFilterTabs = true,
                         onTabSelected =  onTabSelected,
                         onBackButtonPressed = onNavHome
