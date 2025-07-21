@@ -350,7 +350,9 @@ fun SearchContent(
                     if (index < searchedItems.lastIndex ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         HorizontalDivider(
-                            color = MaterialTheme.colorScheme.inverseSurface,
+                            color = MaterialTheme.colorScheme.inverseSurface.copy(
+                                alpha = 0.3f
+                            ),
                             thickness = 0.1.dp
                         )
                     }
