@@ -262,7 +262,7 @@ fun DeliveryNotificationCard(
         Card(
             modifier = modifier
                 .width(screenWidth)
-                .height(190.dp)
+                .height(180.dp)
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
@@ -295,7 +295,7 @@ fun DeliveryNotificationCard(
                                     color = Color(0xFFF6F6F6),
                                     shape = RoundedCornerShape(50.dp)
                                 )
-                                .padding(vertical = 8.dp, horizontal = 12.dp)
+                                .padding(vertical = 4.dp, horizontal = 12.dp)
                         ) {
                             Icon(
                                 painter = painterResource(id = icon),
@@ -307,7 +307,9 @@ fun DeliveryNotificationCard(
                             Text(
                                 text = statusName,
                                 color = colorCode,
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.SemiBold
+                                )
                             )
                         }
 
@@ -315,7 +317,7 @@ fun DeliveryNotificationCard(
                         // Title
                         Text(
                             text = "Arriving today!",
-                            style = MaterialTheme.typography.titleMedium.copy(color = darkBlue, fontWeight = FontWeight.SemiBold)
+                            style = MaterialTheme.typography.titleMedium.copy(color = darkBlue, fontWeight = FontWeight.Bold)
                         )
 
                         Spacer(modifier = Modifier.height(4.dp))
@@ -323,7 +325,7 @@ fun DeliveryNotificationCard(
                         // Description
                         Text(
                             text = "Your delivery, $trackingNumber\nfrom $origin, is arriving today!" ,
-                            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.inverseSurface),
+                            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.inverseSurface, fontWeight = FontWeight.Medium),
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
 
@@ -333,13 +335,22 @@ fun DeliveryNotificationCard(
                         ) {
                             Text(
                                 text = price,
-                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                                 color = MaterialTheme.colorScheme.primary
                             )
-                            Spacer(modifier = Modifier.width(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+
+                            Text(
+                                text = "•" ,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.inverseSurface, fontWeight = FontWeight.Medium),
+                            )
+
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = date,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    fontWeight = FontWeight.Medium
+                                ),
                                 color = darkBlue
                             )
                         }
