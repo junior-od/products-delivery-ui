@@ -1,6 +1,7 @@
 package com.example.ui_take_home_app.ui.screens.shipment
 
 import android.os.Parcelable
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -34,8 +35,13 @@ import kotlinx.android.parcel.Parcelize
 @Composable
 fun ShipmentScreen(
     modifier: Modifier = Modifier,
-    topTabSelected: Int
+    topTabSelected: Int,
+    onBackHome: () -> Unit = {}
 ) {
+
+    BackHandler(
+        onBack = onBackHome
+    )
 
     var firstTime by rememberSaveable {
         mutableStateOf(false)

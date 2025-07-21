@@ -418,6 +418,10 @@ fun TopBarComponent(
     onSearchClosed: () -> Unit = {}
 ) {
 
+    if(tabSelected > 3){
+        return
+    }
+
     var firstTimeBar by rememberSaveable {
         mutableStateOf(false)
     }

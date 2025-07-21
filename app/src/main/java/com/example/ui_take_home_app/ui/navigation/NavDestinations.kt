@@ -32,6 +32,12 @@ sealed class AppDestinations: AppDestinationsInfo {
             get() = "Shipment History"
     }
 
+    @Serializable
+    data object Profile: AppDestinations() {
+        override val title: String
+            get() = "Profile"
+    }
+
     /** success screen pointer */
     @Serializable
     data object Success: AppDestinations() {

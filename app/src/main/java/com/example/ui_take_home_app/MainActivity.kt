@@ -8,12 +8,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
@@ -24,7 +20,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.ui_take_home_app.ui.components.BottomBar
 import com.example.ui_take_home_app.ui.components.TopBarComponent
@@ -64,17 +59,24 @@ class MainActivity : ComponentActivity() {
                 }
 
                 LaunchedEffect(tabIndexSelected != 0) {
-                    bottomBarVisibility = tabIndexSelected == 0
+                    bottomBarVisibility = tabIndexSelected == 0 || tabIndexSelected == 3
 
                     when (tabIndexSelected) {
+                        0 -> {
+                            navHostController.popToScreenInBackStack(AppDestinations.Home)
+                        }
                         1 -> {
-                            navHostController.goToScreen(AppDestinations.Calculate)
+                            navHostController.popToScreenInBackStack(AppDestinations.Calculate)
                         }
 
                         2 -> {
                             // shipment
-                            navHostController.goToScreen(AppDestinations.Shipment)
+                            navHostController.popToScreenInBackStack(AppDestinations.Shipment)
 
+                        }
+
+                        3 -> {
+                            navHostController.popToScreenInBackStack(AppDestinations.Profile)
                         }
                     }
                 }
@@ -133,7 +135,14 @@ class MainActivity : ComponentActivity() {
                         navHostController = navHostController,
                         searchInProgress = searchInProgress,
                         searchText = searchText,
-                        topTabSelected = topTabSelected
+                        topTabSelected = topTabSelected,
+                        onNavigateTo = {
+
+                            tabIndexSelected = 5
+                        },
+                        onBackHome = {
+                            tabIndexSelected = 0
+                        }
                     )
                 }
             }

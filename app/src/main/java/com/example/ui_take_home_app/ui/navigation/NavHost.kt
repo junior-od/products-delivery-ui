@@ -17,7 +17,9 @@ fun AppNavHost(
     startDestination: AppDestinations = AppDestinations.Home,
     searchInProgress: Boolean = false,
     searchText: String = "",
-    topTabSelected : Int
+    topTabSelected : Int,
+    onNavigateTo: (AppDestinations) -> Unit = {},
+    onBackHome: () -> Unit = {}
 ) {
 
     NavHost(
@@ -34,13 +36,32 @@ fun AppNavHost(
         }
 
         composable<AppDestinations.Calculate>{
-            CalculateScreen()
+            CalculateScreen(
+                onCalculateClicked = {
+                    onNavigateTo(AppDestinations.Success)
+
+                    navHostController.goToScreen(AppDestinations.Success)
+
+                },
+                onBackHome = onBackHome
+            )
         }
 
         composable<AppDestinations.Shipment> {
             ShipmentScreen(
-                topTabSelected = topTabSelected
+                topTabSelected = topTabSelected,
+                onBackHome = onBackHome
             )
+        }
+
+        composable<AppDestinations.Profile> {
+
+
+        }
+
+        composable<AppDestinations.Success> {
+
+
         }
 
     }

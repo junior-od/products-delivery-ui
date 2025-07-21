@@ -1,5 +1,6 @@
 package com.example.ui_take_home_app.ui.screens.calculate
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,17 +29,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.ui_take_home_app.R
+import com.example.ui_take_home_app.ui.components.AppButton
 import com.example.ui_take_home_app.ui.components.BoxSelectorCard
 import com.example.ui_take_home_app.ui.components.Category
 import com.example.ui_take_home_app.ui.components.CategorySelectionGrid
 import com.example.ui_take_home_app.ui.components.DoubleTextWithIcon
 import com.example.ui_take_home_app.ui.components.InputCard
+import com.example.ui_take_home_app.ui.navigation.AppDestinations
 import com.example.ui_take_home_app.ui.theme.darkBlue
+import kotlinx.coroutines.delay
 
 @Composable
-fun CalculateScreen(modifier: Modifier = Modifier) {
+fun CalculateScreen(modifier: Modifier = Modifier, onCalculateClicked: () -> Unit = {}, onBackHome: () -> Unit = {}) {
+
+    BackHandler(
+        onBack = onBackHome
+    )
 
     var firstTime by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var buttonAnim by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -68,10 +82,13 @@ fun CalculateScreen(modifier: Modifier = Modifier) {
 
     LaunchedEffect(Unit) {
         firstTime = true
+        delay(500)
+        buttonAnim = true
     }
 
      Column(modifier = modifier
          .fillMaxSize()
+         .verticalScroll(rememberScrollState())
          .padding(16.dp)
          .background(color = MaterialTheme.colorScheme.background)) {
 
@@ -193,7 +210,7 @@ fun CalculateScreen(modifier: Modifier = Modifier) {
 
                  DoubleTextWithIcon(
                      hasIcon = false,
-                     title = "Packaging",
+                     title = "Categories",
                      body = "What are you sending?",
                      titleStyle = MaterialTheme.typography.titleLarge.copy(
                          color = darkBlue,
@@ -224,6 +241,26 @@ fun CalculateScreen(modifier: Modifier = Modifier) {
                      }
                  }
              )
+
+             Spacer(modifier = Modifier.height(64.dp))
+
+             AnimatedVisibility(
+                 visible = buttonAnim,
+                 enter = slideInVertically(
+                     animationSpec = tween(1000),
+                     initialOffsetY = {
+                         it
+                     }
+                 )
+             ) {
+                 AppButton(
+                     onClick = onCalculateClicked
+                 )
+             }
+
+
+             Spacer(modifier = Modifier.height(16.dp))
+
          }
 
 
