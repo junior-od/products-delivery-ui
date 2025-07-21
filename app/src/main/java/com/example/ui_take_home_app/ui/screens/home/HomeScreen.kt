@@ -153,7 +153,7 @@ fun HomeContent(
                         }
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.2f), thickness = 0.1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.3.dp)
 
                         Spacer(modifier = Modifier.height(12.dp))
 
@@ -211,7 +211,7 @@ fun HomeContent(
 
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.1.dp)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.3.dp)
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(
@@ -350,10 +350,8 @@ fun SearchContent(
                     if (index < searchedItems.lastIndex ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         HorizontalDivider(
-                            color = MaterialTheme.colorScheme.inverseSurface.copy(
-                                alpha = 0.3f
-                            ),
-                            thickness = 0.1.dp
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            thickness = 0.3.dp
                         )
                     }
                 }
