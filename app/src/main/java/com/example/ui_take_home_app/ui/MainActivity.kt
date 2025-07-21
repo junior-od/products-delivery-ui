@@ -1,4 +1,4 @@
-package com.example.ui_take_home_app
+package com.example.ui_take_home_app.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,7 +25,6 @@ import com.example.ui_take_home_app.ui.components.BottomBar
 import com.example.ui_take_home_app.ui.components.TopBarComponent
 import com.example.ui_take_home_app.ui.navigation.AppDestinations
 import com.example.ui_take_home_app.ui.navigation.AppNavHost
-import com.example.ui_take_home_app.ui.navigation.goToScreen
 import com.example.ui_take_home_app.ui.navigation.popToScreenInBackStack
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 
