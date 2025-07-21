@@ -41,7 +41,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
 import com.example.ui_take_home_app.ui.components.DoubleTextWithIcon
@@ -110,7 +112,7 @@ fun HomeContent(
                     )
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -133,6 +135,7 @@ fun HomeContent(
                                 hasIcon = false,
                                 title = "Shipment Number",
                                 body = "NEJ20089934122231",
+                                bodyModifier = Modifier.padding(vertical = 8.dp),
                                 bodyStyle = MaterialTheme.typography.bodyLarge.copy(
                                     color = darkBlue,
                                     fontWeight = FontWeight.Bold
@@ -143,14 +146,14 @@ fun HomeContent(
                             AsyncImage(
                                 model = R.drawable.mover_truck,
                                 contentDescription = "shipment icon",
-                                modifier = Modifier.size(32.dp),
+                                modifier = Modifier.size(50.dp),
                                 contentScale = ContentScale.Crop
                             )
 
                         }
 
                         Spacer(modifier = Modifier.height(8.dp))
-                        HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.1.dp)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.3.dp)
 
                         Spacer(modifier = Modifier.height(12.dp))
 
@@ -208,7 +211,7 @@ fun HomeContent(
 
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.1.dp)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.inverseSurface, thickness = 0.3.dp)
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(
@@ -348,7 +351,7 @@ fun SearchContent(
                         Spacer(modifier = Modifier.height(16.dp))
                         HorizontalDivider(
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            thickness = 0.1.dp
+                            thickness = 0.3.dp
                         )
                     }
                 }

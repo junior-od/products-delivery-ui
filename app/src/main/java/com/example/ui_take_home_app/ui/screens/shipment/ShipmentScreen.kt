@@ -1,6 +1,7 @@
 package com.example.ui_take_home_app.ui.screens.shipment
 
 import android.os.Parcelable
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -48,9 +49,7 @@ fun ShipmentScreen(
         mutableStateOf(false)
     }
 
-    LaunchedEffect(Unit) {
-        firstTime = true
-    }
+
 
     var history by remember {
         mutableStateOf(
@@ -68,11 +67,14 @@ fun ShipmentScreen(
 
         when (topTabSelected) {
             2 -> {
-                history = listOf(
-                    Shipment(21,"0"),
-                    Shipment(22,"0"),
-                    Shipment(23,"0")
-                )
+                if(firstTime){
+                    history = listOf(
+                        Shipment(21,"0"),
+                        Shipment(22,"0"),
+                        Shipment(23,"0")
+                    )
+                }
+
             }
 
             else -> {
@@ -86,6 +88,9 @@ fun ShipmentScreen(
             }
         }
 
+    }
+    LaunchedEffect(Unit) {
+        firstTime = true
     }
 
     Box(modifier = modifier
@@ -136,7 +141,7 @@ fun ShipmentScreen(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .height(100.dp)// Height of the blur area
+                .height(80.dp)// Height of the blur area
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(

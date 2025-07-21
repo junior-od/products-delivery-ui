@@ -35,6 +35,7 @@ fun DoubleTextWithIcon(
     icon: Int = R.drawable.ic_profile,
     title: String = "Sender",
     body: String = "Atlanta, 5243",
+    bodyModifier: Modifier = Modifier,
     hasTitle: Boolean = true,
     hasBody: Boolean = true,
     hasActiveIcon: Boolean = false,
@@ -90,6 +91,7 @@ fun DoubleTextWithIcon(
 
                 if (hasBody){
                     Text(
+                        modifier = bodyModifier,
                         text = body,
                         textAlign = TextAlign.Left,
                         style = bodyStyle
