@@ -156,7 +156,7 @@ fun BoxSelectorCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.SemiBold,
                     color = darkBlue
                 ),
                 modifier = Modifier
