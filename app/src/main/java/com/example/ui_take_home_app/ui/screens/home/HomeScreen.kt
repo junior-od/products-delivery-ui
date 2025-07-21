@@ -172,8 +172,9 @@ fun HomeContent(
                             DoubleTextWithIcon(
                                 modifier = Modifier.fillMaxWidth(),
                                 hasIcon = false,
+                                hasActiveIcon = true,
                                 title = "Time",
-                                body = "• 2 day -3 days"
+                                body = "2 day -3 days"
                             )
 
                         }
