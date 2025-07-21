@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
 
                     when (tabIndexSelected) {
                         1 -> {
-
+                            navHostController.goToScreen(AppDestinations.Calculate)
                         }
 
                         2 -> {

@@ -1,5 +1,6 @@
 package com.example.ui_take_home_app.ui.screens.shipment
 
+import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.example.ui_take_home_app.ui.components.DeliveryNotificationCard
 import com.example.ui_take_home_app.ui.components.DoubleTextWithIcon
 import com.example.ui_take_home_app.ui.theme.darkBlue
+import kotlinx.android.parcel.Parcelize
 
 @Composable
 fun ShipmentScreen(
@@ -148,8 +150,9 @@ fun ShipmentScreen(
 
 }
 
+@Parcelize
 data class Shipment(
     val id: Int,
     val status: String
-)
+): Parcelable
 

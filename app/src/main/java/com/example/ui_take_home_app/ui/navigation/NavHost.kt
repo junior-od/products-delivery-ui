@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.ui_take_home_app.ui.screens.calculate.CalculateScreen
 import com.example.ui_take_home_app.ui.screens.home.HomeScreen
 import com.example.ui_take_home_app.ui.screens.shipment.ShipmentScreen
 
@@ -30,6 +31,10 @@ fun AppNavHost(
                searchInProgress = searchInProgress,
                searchText =  searchText
             )
+        }
+
+        composable<AppDestinations.Calculate>{
+            CalculateScreen()
         }
 
         composable<AppDestinations.Shipment> {

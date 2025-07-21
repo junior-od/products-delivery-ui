@@ -1,5 +1,6 @@
 package com.example.ui_take_home_app.ui.screens.home
 
+import android.os.Parcelable
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -54,6 +55,7 @@ import com.example.ui_take_home_app.ui.components.DoubleTextWithIcon
 import com.example.ui_take_home_app.ui.components.HorizontalVehiclesList
 import com.example.ui_take_home_app.ui.components.Vehicle
 import com.example.ui_take_home_app.ui.theme.darkBlue
+import kotlinx.android.parcel.Parcelize
 import java.util.Random
 
 @Composable
@@ -386,8 +388,9 @@ fun SearchItem(
     )
 }
 
+@Parcelize
 data class Search(
     val id: Int,
     val title: String,
     val body: String
-)
+): Parcelable

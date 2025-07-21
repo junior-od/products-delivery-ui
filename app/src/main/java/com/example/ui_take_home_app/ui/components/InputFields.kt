@@ -1,7 +1,10 @@
 package com.example.ui_take_home_app.ui.components
 
+import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
@@ -23,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,6 +52,7 @@ import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 import com.example.ui_take_home_app.ui.theme.darkBlue
+import kotlinx.parcelize.Parcelize
 
 @Composable
 fun InputCard(
@@ -66,7 +71,7 @@ fun InputCard(
     ) {
         // Icon inside bordered box
         AsyncImage(
-            model = R.drawable.box_with_shadow,
+            model = icon,
             contentDescription = "box icon",
             modifier = Modifier.size(24.dp),
             contentScale = ContentScale.Crop
@@ -84,7 +89,7 @@ fun InputCard(
 
         // Input field (styled like plain text)
         TextField(
-            modifier = Modifier,
+            modifier = Modifier.padding(vertical = 8.dp),
             value = value,
             onValueChange = onValueChange,
             singleLine = true,
@@ -115,8 +120,10 @@ fun BoxSelectorCard(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.tertiary, shape = RoundedCornerShape(16.dp))
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiary),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
             modifier = modifier
@@ -152,7 +159,7 @@ fun BoxSelectorCard(
                     fontWeight = FontWeight.Medium,
                     color = darkBlue
                 ),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).padding(vertical = 8.dp)
             )
 
             // Chevron down icon
@@ -166,12 +173,12 @@ fun BoxSelectorCard(
     }
 
 }
-
+@Parcelize
 data class Category(
     val id: String,
     val name: String,
     val isSelected: Boolean = false
-)
+): Parcelable
 
 
 @Composable
@@ -262,10 +269,9 @@ fun CategorySelectionGrid(
     FlowRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
             .animateContentSize(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         categories.forEach { category ->
             CategoryButton(

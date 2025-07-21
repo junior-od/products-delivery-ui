@@ -1,5 +1,6 @@
 package com.example.ui_take_home_app.ui.components
 
+import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -87,6 +88,7 @@ import com.example.ui_take_home_app.ui.theme.darkBlue
 import com.example.ui_take_home_app.ui.theme.darkGray
 import com.example.ui_take_home_app.ui.theme.lightPurple
 import com.example.ui_take_home_app.ui.theme.secondary
+import kotlinx.android.parcel.Parcelize
 
 @Composable
 fun BottomBar(
@@ -214,11 +216,12 @@ fun BottomNavItem(
 }
 
 // Navigation items data class
+@Parcelize
 data class BottomNavItem(
     val title: String,
     val selectedIcon: Int,
     val unselectedIcon: Int
-)
+): Parcelable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -738,11 +741,12 @@ fun ScanIcon(
 }
 
 // Tab with badges data class
+@Parcelize
 data class TabItem(
     val title: String,
     val count: Int,
     val isSelected: Boolean
-)
+): Parcelable
 
 @Preview
 @Composable

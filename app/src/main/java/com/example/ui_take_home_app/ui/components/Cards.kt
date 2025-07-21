@@ -1,5 +1,6 @@
 package com.example.ui_take_home_app.ui.components
 
+import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -52,6 +53,7 @@ import coil3.compose.AsyncImage
 import com.example.ui_take_home_app.R
 import com.example.ui_take_home_app.ui.theme.UitakehomeappTheme
 import com.example.ui_take_home_app.ui.theme.darkBlue
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.delay
 
 @Composable
@@ -174,11 +176,12 @@ fun HorizontalVehiclesList(
     }
 }
 
+@Parcelize
 data class Vehicle(
     val title: String,
     val body: String,
     val icon: Int
-)
+): Parcelable
 
 @Composable
 fun DeliveryNotificationCard(
